@@ -119,19 +119,13 @@ def train(gpu, args):
     logging.info("Starting training loop at step %d." % (initial_step,))
     for step in range(initial_step, num_train_steps + 1):
         # Convert data to JAX arrays and normalize them. Use ._numpy() to avoid copy.
-        if config.data.dataset == 'speech_commands' and config.data.category != 'tfmel':
-            try:
-                batch = next(train_iter).cuda(non_blocking=True)
-                if len(batch) != config.training.batch_size:
-                    continue
-            except StopIteration:
-                train_iter = iter(train_ds)
-                batch = next(train_iter).cuda(non_blocking=True)
-        else:
-            batch = torch.from_numpy(next(train_iter)['image']._numpy()).to(config.device, non_blocking=True).float()
-            # change to channel first only for original tf datasets but not for mel datasets
-            if config.data.category != 'tfmel':
-                batch = batch.permute(0, 3, 1, 2)
+        try:
+            batch = next(train_iter).cuda(non_blocking=True)
+            if len(batch) != config.training.batch_size:
+                continue
+        except StopIteration:
+            train_iter = iter(train_ds)
+            batch = next(train_iter).cuda(non_blocking=True)
 
         batch = scaler(batch)
         # Execute one training step
@@ -161,8 +155,7 @@ def train(gpu, args):
 
         # Report the loss on an evaluation dataset periodically
         if step % config.training.eval_freq == 0 and gpu == 0:
-            if config.data.dataset == 'speech_commands':
-                eval_batch = next(eval_iter).cuda()
+            eval_batch = next(eval_iter).cuda()
             eval_batch = scaler(eval_batch)
             eval_loss = eval_step_fn(state, eval_batch)
             logging.info("step: %d, eval_loss: %.5e" % (step, eval_loss.item()))

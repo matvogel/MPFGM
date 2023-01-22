@@ -40,7 +40,8 @@ def get_default_configs():
     
     # model
     config.model = model = ml_collections.ConfigDict()
-
+    model.dropout = 0.0
+    
     # optimization
     config.optim = optim = ml_collections.ConfigDict()
     optim.weight_decay = 0

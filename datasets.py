@@ -36,13 +36,8 @@ def get_dataset(args, evaluation=False):
     config = args.config
 
     # Create dataset builders for each dataset.
-    if config.data.dataset == "speech_commands":
-        if config.data.category in ['audio', 'mel']:
-            train_loader = get_loader_mel(mode="training", args=args)
-            valid_loader = get_loader_mel(mode="validation", args=args)
-    else:
-        raise NotImplementedError(
-            f'Dataset {config.data.dataset} not yet supported.')
+    train_loader = get_loader_mel(mode="training", args=args)
+    valid_loader = get_loader_mel(mode="validation", args=args)
 
     dataset_builder = None
 
