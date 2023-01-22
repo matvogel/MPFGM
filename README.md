@@ -1,4 +1,4 @@
-# Poisson Flow Generative Models For Audio Generation
+# Mel Poisson Flow Generative Models For Audio Generation
 
 Based on the Pytorch implementation of the NeurIPS 2022
 paper [Poisson Flow Generative Models](https://arxiv.org/abs/2209.11178),
