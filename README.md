@@ -10,7 +10,7 @@ by [Yilun Xu](http://yilun-xu.com)\*, [Ziming Liu](https://kindxiaoming.github.i
 
 ## Dependencies
 
-Tested on Ubuntu with Python 3.10
+Tested on Ubuntu with Python 3.10 and CUDA 11.5.
 
 ```sh
 conda create -n poisson python=3.10 --yes
@@ -109,3 +109,7 @@ described in our report in the Google drive below.
 
 https://drive.google.com/drive/folders/18cMaVX4o5fwFsZ8ZPpnvWDg9H57EaX3_?usp=share_link
 
+## Samples
+[Sample 1](assets/audio/MPFGM_128/sample_0_0.mp4)
+[Sample 2](assets/audio/MPFGM_128/sample_0_6.mp4)
+[Sample 3](assets/audio/MPFGM_128/sample_0_9.mp4)
