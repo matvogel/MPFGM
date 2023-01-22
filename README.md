@@ -6,7 +6,7 @@ paper [Poisson Flow Generative Models](https://arxiv.org/abs/2209.11178),
 by [Yilun Xu](http://yilun-xu.com)\*, [Ziming Liu](https://kindxiaoming.github.io/#pub)
 \*, [Max Tegmark](https://space.mit.edu/home/tegmark/), [Tommi S. Jaakkola](http://people.csail.mit.edu/tommi/)
 
-![](/assets/sampling.mp4)
+![](/assets/sampling.gif)
 
 ## Dependencies
 
