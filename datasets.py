@@ -50,12 +50,22 @@ class MelDataset(Dataset):
         # make list from all files in all subfolders in args.data.mel_root
         self.paths = [os.path.join(path, name) for path, subdirs, files in os.walk(args.data.mel_root) for name in
                       files]
+        self.mel_length = args.data.spec.image_size
+        self.slicing = args.data.random_slice
 
     def __len__(self):
         return len(self.paths)
 
     def __getitem__(self, index):
         mel = np.load(self.paths[index])
+
+        # load full sample or random part of the mel based on args.data.mel_length
+        if mel.shape[1] > self.mel_length and self.slicing:
+            start = np.random.randint(0, mel.shape[1] - self.args.data.mel_length)
+            mel = mel[:, start:start + self.args.data.mel_length]
+        elif mel.shape[1] < self.args.data.mel_length:
+            raise ValueError("Mel spectrogram should be longer than mel_length")
+
         mel = torch.tensor(mel, dtype=torch.float)
         return mel.unsqueeze(0)
 

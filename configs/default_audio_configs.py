@@ -37,7 +37,9 @@ def get_default_configs():
     config.data = data = ml_collections.ConfigDict()
     data.centered = False # if data is in -1 to 1 range
     data.num_channels = 1 # number of image channels
+    data.random_slice = False # random slice of the audio
     
+
     # model
     config.model = model = ml_collections.ConfigDict()
     model.dropout = 0.0
