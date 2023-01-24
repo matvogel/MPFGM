@@ -62,10 +62,15 @@ class MelDataset(Dataset):
         # load full sample or random part of the mel based on args.data.mel_length
         if mel.shape[1] > self.mel_length and self.slicing:
             start = np.random.randint(0, mel.shape[1] - self.args.data.mel_length)
-            mel = mel[:, start:start + self.args.data.mel_length]
-        elif mel.shape[1] < self.args.data.mel_length:
-            raise ValueError("Mel spectrogram should be longer than mel_length")
+            mel = mel[:, start:start + self.args.data.mel_length] 
+        elif mel.shape[1] < self.mel_length:
+            # pad with zeros
+            pad_len = self.mel_length - mel.shape[1]
+            if pad_len > 0:
+                mel = np.hstack((mel, np.zeros((mel.shape[0], pad_len))))
 
+        print(mel.shape)
+        
         mel = torch.tensor(mel, dtype=torch.float)
         return mel.unsqueeze(0)
 

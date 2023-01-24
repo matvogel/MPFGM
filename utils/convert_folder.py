@@ -4,6 +4,7 @@ import argparse
 import librosa
 import numpy as np
 import warnings
+import soundfile as sf
 
 # filter warnings for mel bin errors, be aware of it!
 warnings.filterwarnings("ignore")
@@ -49,17 +50,20 @@ def convert_folder(folder, target, config):
     files = os.listdir(folder)
     for f in files:
         f_path = os.path.join(folder, f)
-        waveform, sr = librosa.load(f_path, sr=config.sample_rate, res_type='kaiser_fast')
+
+        waveform, sr = sf.read(f_path)
+        # resample using librosa to target sampling rate
+        if sr != int(config.sample_rate):
+            waveform = librosa.resample(waveform, orig_sr=sr, target_sr=config.sample_rate, res_type='kaiser_fast')
+
         mel = librosa_melspec(waveform, config)
-        mel = librosa.power_to_db(mel, top_db=80).astype(np.float32)
+        mel = librosa.power_to_db(mel, ref=np.max, top_db=80).astype(np.float32)
+
         # scale from 0 to 1
         mel = mel - mel.min()
         mel = mel / mel.max()
-        # pad with zeros
-        pad_len = config.image_size - mel.shape[1]
-        if pad_len > 0:
-            mel = np.hstack((mel, np.zeros((mel.shape[0], pad_len))))
-        np.save(os.path.join(target, number, f.split('.')[0]), mel)
+        np.save(os.path.join(target, number, '.'.join(f.split('.')[:-1])), mel)
+        
     print("Converted {folder}")
 
 

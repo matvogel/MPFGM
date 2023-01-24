@@ -48,3 +48,4 @@ eval_mathias.py
 /audio_samples/
 *std*.txt
 *.ipynb
+/datasets/

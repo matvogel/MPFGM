@@ -45,7 +45,7 @@ def get_config():
     data.spec = get_mels_128()
     data.image_height = data.spec.image_size
     data.image_width = data.spec.image_size
-    data.mel_root = 'mel_sc09_128'
+    data.mel_root = 'reggae128'
     data.channels = 1
     data.category = 'mel'  # audio, mel
     data.centered = False
@@ -75,10 +75,10 @@ def get_config():
     model.nf = 128
     model.ch_mult = (1, 2, 4)  # initial (1, 1, 2, 2, 4, 4)
     model.num_res_blocks = 4  # initial 2
-    model.attn_resolutions = ()  # initial (16,)
+    model.attn_resolutions = (16,)  # initial (16,)
     model.resamp_with_conv = True
     model.skip_rescale = True
-    model.resblock_type = 'ddpm'
+    model.resblock_type = 'biggan'
     model.progressive_combine = 'sum'
     model.attention_type = 'ddpm'
     model.init_scale = 0.
