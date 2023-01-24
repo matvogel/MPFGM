@@ -51,6 +51,9 @@ class MelDataset(Dataset):
         self.paths = [os.path.join(path, name) for path, subdirs, files in os.walk(args.data.mel_root) for name in
                       files]
         self.mel_length = args.data.spec.image_size
+        # cut last timeframe if the shape is uneven for stable interpolation
+        if self.mel_length % 2:
+            self.mel_length -=1
         self.slicing = args.data.random_slice
 
     def __len__(self):

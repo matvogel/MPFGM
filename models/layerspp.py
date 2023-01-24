@@ -206,8 +206,8 @@ class ResnetBlockBigGANpp(nn.Module):
 
         # TODO add back FIR up/downsampling
         if self.up:
-            h = F.upsample(h, scale_factor=2, mode='bilinear')
-            x = F.upsample(x, scale_factor=2, mode='bilinear')
+            h = F.interpolate(h, scale_factor=2, mode='bilinear')
+            x = F.interpolate(x, scale_factor=2, mode='bilinear')
         elif self.down:
             h = F.interpolate(h, scale_factor=1/2, mode='bilinear')
             x = F.interpolate(x, scale_factor=1/2, mode='bilinear')
