@@ -1,4 +1,5 @@
 import torch
+from torch import nn 
 
 def get_weight(module,
                shape,

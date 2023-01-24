@@ -43,7 +43,7 @@ def get_config():
     data = config.data
     data.spec = ml_collections.ConfigDict()
     data.spec = get_mels_128()
-    data.image_height = data.spec.image_size
+    data.image_height = data.spec.num_mels
     data.image_width = data.spec.image_size
     data.mel_root = 'reggae128'
     data.channels = 1

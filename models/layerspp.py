@@ -204,20 +204,13 @@ class ResnetBlockBigGANpp(nn.Module):
     def forward(self, x, zemb=None):
         h = self.act(self.GroupNorm_0(x))
 
+        # TODO add back FIR up/downsampling
         if self.up:
-            if self.fir:
-                h = up_or_down_sampling.upsample_2d(h, self.fir_kernel, factor=2)
-                x = up_or_down_sampling.upsample_2d(x, self.fir_kernel, factor=2)
-            else:
-                h = up_or_down_sampling.naive_upsample_2d(h, factor=2)
-                x = up_or_down_sampling.naive_upsample_2d(x, factor=2)
+            h = F.upsample(h, scale_factor=2, mode='bilinear')
+            x = F.upsample(x, scale_factor=2, mode='bilinear')
         elif self.down:
-            if self.fir:
-                h = up_or_down_sampling.downsample_2d(h, self.fir_kernel, factor=2)
-                x = up_or_down_sampling.downsample_2d(x, self.fir_kernel, factor=2)
-            else:
-                h = up_or_down_sampling.naive_downsample_2d(h, factor=2)
-                x = up_or_down_sampling.naive_downsample_2d(x, factor=2)
+            h = F.interpolate(h, scale_factor=1/2, mode='bilinear')
+            x = F.interpolate(x, scale_factor=1/2, mode='bilinear')
 
         h = self.Conv_0(h)
         # Add bias to each feature map conditioned on the z-value embedding
