@@ -66,14 +66,12 @@ class MelDataset(Dataset):
                 mel = mel[:, start:start + self.mel_length]
             else:
                 mel = mel[:, :self.mel_length]
-         
+
         elif mel.shape[1] < self.mel_length:
             # pad with zeros
             pad_len = self.mel_length - mel.shape[1]
             if pad_len > 0:
                 mel = np.hstack((mel, np.zeros((mel.shape[0], pad_len))))
-
-        print(mel.shape)
         
         mel = torch.tensor(mel, dtype=torch.float)
         return mel.unsqueeze(0)
