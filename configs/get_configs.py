@@ -36,8 +36,8 @@ def get_config(args):
             config.training.snapshot_freq_for_preemption = 1
     
     # cut last timeframe if the shape is uneven for stable interpolation
-    if config.data.spec.mel_length % 2:
-        config.data.spec.mel_length -=1
+    if config.data.image_width % 2:
+        config.data.image_width -=1
 
     print("Read Config: ", config, sep='\n')
 

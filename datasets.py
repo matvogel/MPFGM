@@ -50,7 +50,7 @@ class MelDataset(Dataset):
         # make list from all files in all subfolders in args.data.mel_root
         self.paths = [os.path.join(path, name) for path, subdirs, files in os.walk(args.data.mel_root) for name in
                       files]
-        self.mel_length = args.data.spec.image_size
+        self.mel_length = args.data.image_width
         self.slicing = args.data.random_slice
 
     def __len__(self):
