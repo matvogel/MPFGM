@@ -60,9 +60,13 @@ class MelDataset(Dataset):
         mel = np.load(self.paths[index])
 
         # load full sample or random part of the mel based on args.data.mel_length
-        if mel.shape[1] > self.mel_length and self.slicing:
-            start = np.random.randint(0, mel.shape[1] - self.args.data.mel_length)
-            mel = mel[:, start:start + self.args.data.mel_length] 
+        if mel.shape[1] > self.mel_length:
+            if self.slicing:
+                start = np.random.randint(0, mel.shape[1] - self.mel_length)
+                mel = mel[:, start:start + self.mel_length]
+            else:
+                mel = mel[:, :self.mel_length]
+         
         elif mel.shape[1] < self.mel_length:
             # pad with zeros
             pad_len = self.mel_length - mel.shape[1]
