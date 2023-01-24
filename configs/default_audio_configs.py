@@ -70,7 +70,7 @@ def get_mels_64():
     spec.sample_rate = 16_000
     spec.fmin = 20
     spec.audio_length = 1
-    spec.image_size = spec.audio_length * spec.sample_rate // spec.hop_length + 2  # this is 64 which fits the num mels
+    spec.image_size = spec.audio_length * spec.sample_rate // spec.hop_length
     spec.spec_len_samples = spec.image_size
     return spec
 
@@ -84,6 +84,6 @@ def get_mels_128():
     spec.sample_rate = 16_000
     spec.fmin = 20
     spec.audio_length = 5
-    spec.image_size = spec.audio_length * spec.sample_rate // spec.hop_length + 3  # this is 128 which fits the num mels
+    spec.image_size = spec.audio_length * spec.sample_rate // spec.hop_length
     spec.spec_len_samples = spec.image_size
     return spec
